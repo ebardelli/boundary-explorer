@@ -84,16 +84,16 @@ export async function calculateGradeLevelStatistics() {
     const sql = `
         SELECT
             stateMap.school AS name,
-            block_statistics.map AS grade,
+            block_statistics.grade AS grade,
             SUM(COALESCE(block_statistics.students, 0)) AS students
         FROM data.block_statistics
             LEFT JOIN stateMap ON stateMap.block_of_residence = block_statistics.block_of_residence
         WHERE
             stateMap.school IS NOT NULL
-            AND block_statistics.map IS NOT NULL
+            AND block_statistics.grade IS NOT NULL
             ${activeFilter}
-        GROUP BY stateMap.school, block_statistics.map
-        ORDER BY stateMap.school, block_statistics.map
+        GROUP BY stateMap.school, block_statistics.grade
+        ORDER BY stateMap.school, block_statistics.grade
     `;
 
     const rows = await runAggregate(sql);
@@ -138,7 +138,7 @@ export async function calculateGradeLevelFTEStatistics() {
     const sql = `
         SELECT
             stateMap.school AS name,
-            block_statistics.map AS grade,
+            block_statistics.grade AS grade,
             CASE WHEN '${escapedTable}' = 'elementary'
                  THEN ROUND(SUM(CAST(COALESCE(block_statistics.fte_students, 0) AS DOUBLE)) * 2.0) / 2.0
                  ELSE ROUND(SUM(CAST(COALESCE(block_statistics.fte_students, 0) AS DOUBLE)) * 5.0) / 5.0
@@ -151,10 +151,10 @@ export async function calculateGradeLevelFTEStatistics() {
             LEFT JOIN stateMap ON stateMap.block_of_residence = block_statistics.block_of_residence
         WHERE
             stateMap.school IS NOT NULL
-            AND block_statistics.map IS NOT NULL
+            AND block_statistics.grade IS NOT NULL
             ${activeFilter}
-        GROUP BY stateMap.school, block_statistics.map
-        ORDER BY stateMap.school, block_statistics.map
+        GROUP BY stateMap.school, block_statistics.grade
+        ORDER BY stateMap.school, block_statistics.grade
     `;
 
     const rows = await runAggregate(sql);
