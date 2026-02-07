@@ -94,7 +94,7 @@ export function createLayerControls(map) {
                 if (key === 'landmarks') {
                     // NOTE: Landmark icons were switched from emoji to Font Awesome icons.
                     // This file now emits <i class="fa-solid fa-..."> elements inside
-                    // the landmark divIcon. Ensure `apps/boundary-explorer/index.html`
+                    // the landmark divIcon. Ensure `app/index.html`
                     // includes the Font Awesome stylesheet (this project uses the
                     // CDN link there). If you prefer a different FA subset or an
                     // offline package, update the stylesheet reference accordingly.

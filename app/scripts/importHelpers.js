@@ -174,7 +174,7 @@ export async function flushSchools(options = {}) {
             import('./stats.js')
         ]);
 
-        // Optionally re-initialize default schools (loads apps/boundary-explorer/schools.json)
+        // Optionally re-initialize default schools (loads app/schools.json)
         // By default we reload defaults to ensure the UI has a baseline set of
         // schools when switching base maps. However, file imports should skip
         // reloading defaults so the imported file's referenced schools become
