@@ -1,0 +1,36 @@
+{
+  "schools": [
+    {
+      "name": "Bellevue Elementary",
+      "latitude": 38.39748224734746,
+      "longitude": -122.73550669325323,
+      "color": "#002aff",
+      "fte": 0,
+      "capacity": 0
+    },
+    {
+      "name": "Kawana Springs Elementary",
+      "latitude": 38.42110387805702,
+      "longitude": -122.70149087965181,
+      "color": "#00ff4c",
+      "fte": 0,
+      "capacity": 0
+    },
+    {
+      "name": "Meadow View Elementary",
+      "latitude": 38.412463966266884,
+      "longitude": -122.7301300154145,
+      "color": "#e5de15",
+      "fte": 0,
+      "capacity": 0
+    },
+    {
+      "name": "Taylor Mountain Elementary",
+      "latitude": 38.401228638563374,
+      "longitude": -122.70905568820253,
+      "color": "#bb00ff",
+      "fte": 0,
+      "capacity": 0
+    }
+  ]
+}

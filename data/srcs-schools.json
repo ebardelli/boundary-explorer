@@ -1,0 +1,186 @@
+[
+  {
+    "name": "Brook Hill Elementary School",
+    "latitude": "38.438114599999999",
+    "longitude": "-122.6927467",
+    "color": "#aa0000",
+    "enrollment": 0,
+    "fte": 0
+  },
+  {
+    "name": "Luther Burbank Elementary School",
+    "latitude": "38.435390499999997",
+    "longitude": "-122.71574099999999",
+    "color": "#2A643A",
+    "enrollment": 461,
+    "fte": 18
+  },
+  {
+    "name": "Helen Lehman Elementary School",
+    "latitude": "38.449064399999997",
+    "longitude": "-122.7437429",
+    "color": "#DAA520",
+    "enrollment": 487,
+    "fte": 20
+  },
+  {
+    "name": "Albert F. Biella Elementary School",
+    "latitude": "38.449588800000001",
+    "longitude": "-122.7560223",
+    "color": "#0134a6",
+    "enrollment": 0,
+    "fte": 0
+  },
+  {
+    "name": "Abraham Lincoln Elementary School",
+    "latitude": "38.441220299999998",
+    "longitude": "-122.7367028",
+    "color": "#8B0000",
+    "enrollment": 320,
+    "fte": 18
+  },
+  {
+    "name": "James Monroe Elementary School",
+    "latitude": "38.456093199999998",
+    "longitude": "-122.75278400000001",
+    "color": "#FF8C00",
+    "enrollment": 417,
+    "fte": 20
+  },
+  {
+    "name": "Proctor Terrace Elementary School",
+    "latitude": "38.451462300000003",
+    "longitude": "-122.69785210000001",
+    "color": "#800080",
+    "enrollment": 441,
+    "fte": 18
+  },
+  {
+    "name": "Steele Lane Elementary School",
+    "latitude": "38.460694199999999",
+    "longitude": "-122.7206743",
+    "color": "#492C7F",
+    "enrollment": 406,
+    "fte": 17
+  },
+  {
+    "name": "Hidden Valley Elementary School",
+    "latitude": "38.474095953398468",
+    "longitude": "-122.69963760907198",
+    "color": "#006400",
+    "enrollment": 504,
+    "fte": 25
+  },
+  {
+    "name": "Herbert Slater Middle School",
+    "latitude": "38.448257599999998",
+    "longitude": "-122.67262169999999",
+    "color": "#AA0101",
+    "enrollment": 0,
+    "fte": 0
+  },
+  {
+    "name": "Hilliard Comstock Middle School",
+    "latitude": "38.456899300000003",
+    "longitude": "-122.74663219999999",
+    "color": "#573594",
+    "enrollment": 395,
+    "fte": 21.8
+  },
+  {
+    "name": "Rincon Valley Middle School",
+    "latitude": "38.480902749999998",
+    "longitude": "-122.670714603185",
+    "color": "#FF4500",
+    "enrollment": 725,
+    "fte": 32
+  },
+  {
+    "name": "Santa Rosa Middle School",
+    "latitude": "38.444336",
+    "longitude": "-122.71055130000001",
+    "color": "#8B4513",
+    "enrollment": 0,
+    "fte": 0
+  },
+  {
+    "name": "Montgomery High School",
+    "latitude": "38.440588500000004",
+    "longitude": "-122.68273637152325",
+    "color": "#aa0000",
+    "enrollment": 1732,
+    "fte": 89.4
+  },
+  {
+    "name": "Piner High School",
+    "latitude": "38.460771200000003",
+    "longitude": "-122.76940190000001",
+    "color": "#4B0082",
+    "enrollment": 1539,
+    "fte": 68.2
+  },
+  {
+    "name": "Santa Rosa High School",
+    "latitude": "38.452058999999998",
+    "longitude": "-122.7183244",
+    "color": "#000000",
+    "enrollment": 1919,
+    "fte": 99.4
+  },
+  {
+    "name": "Elsie Allen High School",
+    "latitude": "38.405000000000001",
+    "longitude": "-122.7342393",
+    "color": "#556B2F",
+    "enrollment": 935,
+    "fte": 49.4
+  },
+  {
+    "name": "Maria Carrillo High School",
+    "latitude": "38.479991900000002",
+    "longitude": "-122.658233",
+    "color": "#FFA500",
+    "enrollment": 1582,
+    "fte": 70.8
+  },
+  {
+    "name": "Ridgway High School",
+    "latitude": "38.449703499999998",
+    "longitude": "-122.7223367",
+    "color": "#FFD700",
+    "enrollment": 189,
+    "fte": 20
+  },
+  {
+    "name": "Santa Rosa Accelerated Charter School",
+    "latitude": "38.480902749999998",
+    "longitude": "-122.670714603185",
+    "color": "#332F8D",
+    "enrollment": 128,
+    "fte": 4.2
+  },
+  {
+    "name": "Santa Rosa Charter School For the Arts",
+    "latitude": "38.4469767",
+    "longitude": "-122.71417621625231",
+    "color": "#8B008B",
+    "enrollment": 376,
+    "fte": 20
+  },
+  {
+    "name": "Santa Rosa French-American Charter School",
+    "latitude": "38.441546500000001",
+    "longitude": "-122.6974026",
+    "color": "#FF8000",
+    "enrollment": 546,
+    "fte": 21.6
+  },
+  {
+    "name": "Cesar Chavez Language Academy",
+    "latitude": "38.425853500000002",
+    "longitude": "-122.74572499999999",
+    "color": "#CD853F",
+    "enrollment": 795,
+    "fte": 38.6
+  }
+]
