@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+</head>
+    <title>Map Tool Guide</title>
+    <button class="back-button" onclick="goBack()">Go back</button>
+    <button class="language-toggle" onclick="toggleLanguage()">Español</button>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #431A69;
+            border-bottom: 2px solid #431A69;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* How-To Guide Styles */
+        .instructions {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .step {
+            margin-bottom: 25px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: #431A69;
+        }
+
+        .step-content {
+            margin-bottom: 10px;
+        }
+
+        .video-container {
+            margin: 10px 0 20px 0;
+        }
+
+        /* FAQ Styles — use the same visual style as .instructions */
+        .faq {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .faq h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: #431A69;
+        }
+
+        .faq p {
+            margin: 0 0 12px 0;
+            padding: 0;
+            background: none;
+            border: none;
+        }
+
+        /* Common Button Styles */
+        .collapse-button, .language-toggle, .back-button {
+            background: #431A69;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .collapse-button {
+            width: 100%;
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        .collapse-button:hover, .language-toggle:hover {
+            background: #5B2491;
+        }
+
+        .collapse-content {
+            display: none;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            margin-top: 5px;
+            border: 1px solid #431A69;
+        }
+
+        .collapse-content.show {
+            display: block;
+        }
+
+        .key-command {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            border: 1px solid #431A69;
+            color: #431A69;
+        }
+
+        /* Language Toggle Styles */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 120px; /* place to the left of language button */
+            z-index: 1000;
+        }
+
+        .language-toggle {
+            position: fixed;  /* Changed from absolute to fixed */
+            top: 20px;
+            right: 20px;
+            z-index: 1000;   /* Added to ensure button stays on top */
+        }
+
+        /* Add some padding to the top of the container to account for the fixed buttons */
+        .container {
+            padding-top: 60px;
+        }
+
+        [lang="es"] {
+            display: none;
+        }
+
+        body.spanish [lang="en"] {
+            display: none;
+        }
+
+        body.spanish [lang="es"] {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                margin-top: 40px;
+            }
+
+            .faq h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="language-toggle" onclick="toggleLanguage()">Español</button>
+
+    <div class="container">
+        <!-- Table of contents -->
+        <nav aria-label="Table of contents" style="margin-bottom:10px;">
+            <strong>Contents:</strong>
+            <a href="#how-to" style="margin-left:8px;">How-To</a>
+            <a href="#mapping-tools" style="margin-left:8px;">Mapping Tools</a>
+            <a href="#quick-recipes" style="margin-left:8px;">Quick Recipes</a>
+            <a href="#troubleshooting" style="margin-left:8px;">Troubleshooting</a>
+            <a href="#shortcuts" style="margin-left:8px;">Shortcuts</a>
+            <a href="#faq" style="margin-left:8px;">FAQ</a>
+            <a href="#support" style="margin-left:8px;">Support</a>
+        </nav>
+        <!-- How-To Guide Section -->
+        <section id="how-to" lang="en" class="how-to">
+            <h1>How-To Guide</h1>
+            <div class="instructions" style="counter-reset: step-counter">
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Select a Map:</strong> Use the drop down to select a map.
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video1')">
+                            ▼ Watch: How to Select a Map
+                        </button>
+                        <div class="collapse-content" id="video1">
+                            <video width="100%" controls>
+                                <source src="videos/1 Select a Map.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Select one or more schools</strong>
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video2')">
+                            ▼ Watch: How to Select Schools
+                        </button>
+                        <div class="collapse-content" id="video2">
+                            <video width="100%" controls>
+                                <source src="videos/2 Select Schools.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                        <div class="step-content">
+                            <strong>Use the Auto Paint feature (now under Mapping Tools).</strong> Open the <strong>Mapping Tools</strong> panel on the left and expand the Auto Paint subsection. You can use the dropdowns there to adjust the settings.
+                        </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video3')">
+                            ▼ Watch: Using Auto Paint
+                        </button>
+                        <div class="collapse-content" id="video3">
+                            <video width="100%" controls>
+                                <source src="videos/3 Auto Paint.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Select Mode:</strong> You can use this mode to fix individual blocks. You will need to click on each block individually. Press the <span class="key-command">Esc</span> key exits this mode.
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video4')">
+                            ▼ Watch: Using Select Mode
+                        </button>
+                        <div class="collapse-content" id="video4">
+                            <video width="100%" controls>
+                                <source src="videos/4 Select Mode.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Paint Mode:</strong> You can use this mode to paint multiple blocks at the same time. Press the <span class="key-command">Space</span> bar to activate and deactivate this mode.
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video5')">
+                            ▼ Watch: Using Paint Mode
+                        </button>
+                        <div class="collapse-content" id="video5">
+                            <video width="100%" controls>
+                                <source src="videos/5 Paint Mode.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section lang="es" class="how-to">
+            <h1>Guía de Uso</h1>
+            <div class="instructions" style="counter-reset: step-counter">
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Seleccionar un Mapa:</strong> Use el menú desplegable para seleccionar un mapa.
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video1-es')">
+                            ▼ Ver: Cómo Seleccionar un Mapa
+                        </button>
+                        <div class="collapse-content" id="video1-es">
+                            <video width="100%" controls>
+                                <source src="videos/1 Select a Map.mp4" type="video/mp4">
+                                Su navegador no soporta el elemento de video.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Seleccionar una o más escuelas</strong>
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video2-es')">
+                            ▼ Ver: Cómo Seleccionar Escuelas
+                        </button>
+                        <div class="collapse-content" id="video2-es">
+                            <video width="100%" controls>
+                                <source src="videos/2 Select Schools.mp4" type="video/mp4">
+                                Su navegador no soporta el elemento de video.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                        <div class="step-content">
+                            <strong>Usar la función de Pintura Automática (ahora en Herramientas de Mapeo).</strong> Abra el panel de <strong>Herramientas de Mapeo</strong> a la izquierda y expanda la subsección de Pintura Automática. Puede usar los menús desplegables allí para ajustar la configuración.
+                        </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video3-es')">
+                            ▼ Ver: Usando Pintura Automática
+                        </button>
+                        <div class="collapse-content" id="video3-es">
+                            <video width="100%" controls>
+                                <source src="videos/3 Auto Paint.mp4" type="video/mp4">
+                                Su navegador no soporta el elemento de video.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Modo de Selección:</strong> Puede usar este modo para arreglar bloques individuales. Necesitará hacer clic en cada bloque individualmente. Presione la tecla <span class="key-command">Esc</span> para salir de este modo.
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video4-es')">
+                            ▼ Ver: Usando el Modo de Selección
+                        </button>
+                        <div class="collapse-content" id="video4-es">
+                            <video width="100%" controls>
+                                <source src="videos/4 Select Mode.mp4" type="video/mp4">
+                                Su navegador no soporta el elemento de video.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-content">
+                        <strong>Modo de Pintura:</strong> Puede usar este modo para pintar múltiples bloques al mismo tiempo. Presione la barra <span class="key-command">Espacio</span> para activar y desactivar este modo.
+                    </div>
+                    <div class="video-container">
+                        <button class="collapse-button" onclick="toggleVideo('video5-es')">
+                            ▼ Ver: Usando el Modo de Pintura
+                        </button>
+                        <div class="collapse-content" id="video5-es">
+                            <video width="100%" controls>
+                                <source src="videos/5 Paint Mode.mp4" type="video/mp4">
+                                Su navegador no soporta el elemento de video.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapping Tools Section -->
+        <section id="mapping-tools" lang="en" class="how-to">
+            <h1>Mapping Tools</h1>
+            <div class="instructions">
+                <p><strong>Where to find them:</strong> The Mapping Tools panel appears on the left (look for "Mapping Tools" or the mapping-tools placeholder). These controls help you work with external layers and prepare maps for export.</p>
+
+                <ul>
+                    <li><strong>Upload Layer</strong> — Load a GeoJSON (or supported vector) file as a reference layer (attendance zones, parcels, existing boundaries). Uploaded layers are available only for the current session unless you export your map.</li>
+                    <li><strong>Paint By Layer</strong> — Use an uploaded layer to paint blocks in bulk based on geometry overlap. Select the uploaded layer and the target school to transfer the layer's coverage onto census blocks.</li>
+                    <li><strong>Assign By Neighbors</strong> — Automatically fill small unassigned blocks by assigning them the majority school from surrounding blocks. Useful for closing gaps after layer painting.</li>
+                    <li><strong>Merge By School</strong> — Combines contiguous blocks assigned to the same school into a single polygon per school. Run this before exporting if you want one feature per school rather than many small block polygons.</li>
+                    <li><strong>Auto Paint</strong> — Auto Paint uses heuristics to assign blocks automatically; open the Auto Paint subsection to access its settings.</li>
+                </ul>
+
+                <p><strong>Notes:</strong> Mapping Tools display status and progress messages inside the Mapping Tools box. Always review the status text after running an operation. If you plan to save or share the results, run "Merge By School" (if desired) and then use Export GeoJSON to save the merged output.</p>
+            </div>
+        </section>
+
+        <!-- Quick Recipes & Help -->
+        <section id="quick-recipes" lang="en" class="how-to">
+            <h1>Quick Recipes</h1>
+            <div class="instructions">
+                <h3>Exporting / recommended workflow</h3>
+                <p>If you want a single polygon per school, run <strong>Mapping Tools → Merge By School</strong> first, then use <strong>Export GeoJSON</strong>. If you don't merge, export will contain the original block geometries and assignments. Merging can simplify sharing and reduce file size.</p>
+
+                <h3>Supported upload formats</h3>
+                <p><strong>GeoJSON</strong> is recommended. Other vector formats may work if the browser supports them. The app expects data in WGS84 (EPSG:4326) / lon-lat coordinates — if your file uses a projected CRS, convert it first.</p>
+
+                <h3>Paint By Layer example</h3>
+                <p>1) Mapping Tools → Upload Layer (select GeoJSON). 2) Choose the uploaded layer in Paint By Layer. 3) Choose the target school. 4) Run Paint — review status. 5) Optionally run Assign By Neighbors to fill gaps, then Merge By School, then Export.</p>
+            </div>
+        </section>
+
+        <section lang="es" class="how-to">
+            <h1>Herramientas de Mapeo</h1>
+            <div class="instructions">
+                <p><strong>Dónde encontrarlas:</strong> El panel de Herramientas de Mapeo aparece a la izquierda (busque "Mapping Tools" o el marcador mapping-tools). Estos controles le ayudan a trabajar con capas externas y preparar mapas para exportar.</p>
+
+                <ul>
+                    <li><strong>Subir Capa</strong> — Cargue un archivo GeoJSON (u otro vector compatible) como capa de referencia (zonas de asistencia, parcelas, límites existentes). Las capas subidas solo permanecen en la sesión actual a menos que exporte su mapa.</li>
+                    <li><strong>Pintar por Capa</strong> — Use una capa subida para pintar bloques en bloque según la superposición geométrica. Seleccione la capa subida y la escuela destino para transferir la cobertura de la capa a los bloques censales.</li>
+                    <li><strong>Asignar por Vecinos</strong> — Rellena automáticamente pequeños bloques sin asignar usando la escuela mayoritaria de los bloques circundantes. Útil para cerrar huecos después de pintar con una capa.</li>
+                    <li><strong>Fusionar por Escuela</strong> — Combina bloques contiguos asignados a la misma escuela en un solo polígono por escuela. Ejecute esto antes de exportar si desea una característica por escuela en lugar de muchos polígonos pequeños.</li>
+                    <li><strong>Pintura Automática</strong> — La Pintura Automática utiliza heurísticas para asignar bloques automáticamente; abra la subsección para acceder a sus opciones.</li>
+                </ul>
+
+                <p><strong>Notas:</strong> Las Herramientas de Mapeo muestran mensajes de estado y progreso dentro del recuadro de Herramientas de Mapeo. Revise siempre el texto de estado después de ejecutar una operación. Si planea guardar o compartir los resultados, ejecute "Fusionar por Escuela" (si lo desea) y luego use Exportar GeoJSON para guardar la salida fusionada.</p>
+            </div>
+        </section>
+
+        <section id="quick-recipes-es" lang="es" class="how-to">
+            <h1>Recetas Rápidas</h1>
+            <div class="instructions">
+                <h3>Exportar / flujo recomendado</h3>
+                <p>Si desea un polígono por escuela, ejecute <strong>Herramientas de Mapeo → Fusionar por Escuela</strong> antes de <strong>Exportar GeoJSON</strong>. Si no fusiona, la exportación contendrá las geometrías de bloque originales. Fusionar facilita compartir y puede reducir el tamaño del archivo.</p>
+
+                <h3>Formatos soportados</h3>
+                <p><strong>GeoJSON</strong> se recomienda. Otros formatos vectoriales pueden funcionar si el navegador los admite. La aplicación espera datos en WGS84 (EPSG:4326) o coordenadas lon/lat; si su archivo usa un SRC proyectado, conviértalo primero.</p>
+
+                <h3>Ejemplo Pintar por Capa</h3>
+                <p>1) Herramientas de Mapeo → Subir Capa (seleccione GeoJSON). 2) Seleccione la capa subida en Pintar por Capa. 3) Elija la escuela destino. 4) Ejecute Pintar y revise el estado. 5) Opcionalmente ejecute Asignar por Vecinos para rellenar huecos, luego Fusionar por Escuela y Exportar.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" lang="en" class="faq-section">
+            <h1>Frequently Asked Questions</h1>
+
+            <div class="faq">
+                <h3>How do I erase a school?</h3>
+                <p>Select the <strong>Remove from Map</strong> button and all blocks colored in for the school will be erased, as will the pin signifying the school's location.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How do I erase a block?</h3>
+                <p>You can't erase a block, you can only <strong>Select</strong> or <strong>Paint</strong> over it with another school's color.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How do I save my map?</h3>
+                <p>Select the <strong>Export GeoJSON</strong> button on the bottom right hand side of the page.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How do I keep working on a map I saved?</h3>
+                <p>Select the <strong>Import GeoJSON</strong> button on the bottom left hand side of the page to upload your previously saved map (this restores colors and assignments from that file).</p>
+                <p>If you want to load an external reference layer (for example a zoning or attendance-area GeoJSON) instead of a full saved map, open <strong>Mapping Tools</strong> and use <strong>Upload Layer</strong>. Uploaded layers are session-only and are used as references for "Paint By Layer" and other mapping operations.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How were these blocks created?</h3>
+                <p>These are census blocks and they reflect all students currently enrolled in a traditional SRCS school. The student counts do not include our Charter School students or students not attending a SRCS school.</p>
+            </div>
+
+            <div class="faq">
+                <h3>Can I determine how many students live within a particular block?</h3>
+                <p>No, you are only able to see the student count under the statistics information.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How do I drag the map?</h3>
+                <p>You can drag the map when in <strong>Paint Mode</strong> or when neither <strong>Mode</strong> button is selected.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How do I start over?</h3>
+                <p>Refresh the page.</p>
+            </div>
+
+            <div class="faq">
+                <h3>How do I know how many students a school can hold?</h3>
+                <p>Select a school, then <strong>Select</strong> or <strong>Paint</strong> at least one block, the school's statistics will automatically populate under the <strong>Statistics</strong> section on the left hand side of the page.</p>
+            </div>
+
+            <div class="faq">
+                <h3>Can I add a Middle School to an Elementary School District Map?</h3>
+                <p>Yes. You can add any school to any map however the map will still only reflect the district boundaries for the base map you originally selected.</p>
+            </div>
+        </section>
+
+        <section id="troubleshooting" lang="en" class="how-to">
+            <h1>Troubleshooting</h1>
+            <div class="instructions">
+                <h3>Upload failed / blank layer</h3>
+                <p>Check that the file is valid GeoJSON and under browser upload limits. Validate with <a href="https://geojson.io" target="_blank">geojson.io</a> or convert with ogr2ogr if needed.</p>
+
+                <h3>Paint had no effect</h3>
+                <p>Confirm the uploaded layer overlaps the census blocks and that the correct target school is selected. Check the Mapping Tools status text for errors.</p>
+            </div>
+        </section>
+
+        <section id="shortcuts" lang="en" class="how-to">
+            <h1>Shortcuts</h1>
+            <div class="instructions">
+                <p><strong>Space</strong> — Toggle Paint Mode. <strong>Esc</strong> — Exit Select Mode. Buttons include ARIA labels for assistive tech; contact the team if you need additional accessibility support.</p>
+            </div>
+        </section>
+
+        <section id="support" lang="en" class="how-to">
+            <h1>Support</h1>
+            <div class="instructions">
+                <p>Questions or bugs? Please open an issue in the repository with the page name and browser/version, or email the maps team with a short description and a copy of the GeoJSON you used.</p>
+            </div>
+        </section>
+
+        <!-- Spanish FAQ Section -->
+        <section lang="es" class="faq-section">
+            <h1>Preguntas Frecuentes</h1>
+
+            <div class="faq">
+                <h3>¿Cómo borro una escuela?</h3>
+                <p>Seleccione el botón <strong>Eliminar del Mapa</strong> y se borrarán todos los bloques coloreados para la escuela, así como el pin que indica la ubicación de la escuela.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo borro un bloque?</h3>
+                <p>No se puede borrar un bloque, solo puede <strong>Seleccionar</strong> o <strong>Pintar</strong> sobre él con el color de otra escuela.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo guardo mi mapa?</h3>
+                <p>Seleccione el botón <strong>Exportar GeoJSON</strong> en la parte inferior derecha de la página.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo continúo trabajando en un mapa que guardé?</h3>
+                <p>Seleccione el botón <strong>Importar GeoJSON</strong> en la parte inferior izquierda de la página para cargar su mapa guardado (esto restaura colores y asignaciones desde ese archivo).</p>
+                <p>Si desea cargar una capa de referencia externa (por ejemplo un GeoJSON de zonificación o de áreas de asistencia) en lugar de un mapa guardado completo, abra <strong>Herramientas de Mapeo</strong> y use <strong>Subir Capa</strong>. Las capas subidas solo existen en la sesión y se usan como referencias para "Pintar por Capa" y otras operaciones.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo se crearon estos bloques?</h3>
+                <p>Estos son bloques censales y reflejan todos los estudiantes actualmente matriculados en una escuela tradicional SRCS. Los recuentos de estudiantes no incluyen a nuestros estudiantes de Escuelas Charter o estudiantes que no asisten a una escuela SRCS.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Puedo determinar cuántos estudiantes viven dentro de un bloque en particular?</h3>
+                <p>No, solo puede ver el recuento de estudiantes en la información de estadísticas.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo arrastro el mapa?</h3>
+                <p>Puede arrastrar el mapa cuando está en <strong>Modo Pintura</strong> o cuando ningún botón de <strong>Modo</strong> está seleccionado.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo empiezo de nuevo?</h3>
+                <p>Actualice la página.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Cómo sé cuántos estudiantes puede albergar una escuela?</h3>
+                <p>Seleccione una escuela, luego <strong>Seleccione</strong> o <strong>Pinte</strong> al menos un bloque, las estadísticas de la escuela se mostrarán automáticamente en la sección de <strong>Estadísticas</strong> en el lado izquierdo de la página.</p>
+            </div>
+
+            <div class="faq">
+                <h3>¿Puedo agregar una Escuela Secundaria a un Mapa de Distrito de Escuela Primaria?</h3>
+                <p>Sí. Puede agregar cualquier escuela a cualquier mapa, sin embargo, el mapa seguirá reflejando solo los límites del distrito para el mapa base que seleccionó originalmente.</p>
+            </div>
+        </section>
+
+        <section id="troubleshooting-es" lang="es" class="how-to">
+            <h1>Solución de Problemas</h1>
+            <div class="instructions">
+                <h3>Error al subir / capa en blanco</h3>
+                <p>Compruebe que el archivo sea un GeoJSON válido y que esté por debajo de los límites de carga del navegador. Valide con <a href="https://geojson.io" target="_blank">geojson.io</a> o conviértalo con ogr2ogr si es necesario.</p>
+
+                <h3>Pintar no tuvo efecto</h3>
+                <p>Confirme que la capa subida se superpone a los bloques censales y que se seleccionó la escuela destino correcta. Revise el texto de estado en Herramientas de Mapeo para ver errores.</p>
+            </div>
+        </section>
+
+        <section id="shortcuts-es" lang="es" class="how-to">
+            <h1>Atajos</h1>
+            <div class="instructions">
+                <p><strong>Espacio</strong> — Alternar Modo Pintura. <strong>Esc</strong> — Salir del Modo Selección. Los botones incluyen etiquetas ARIA; contacte al equipo si necesita soporte adicional de accesibilidad.</p>
+            </div>
+        </section>
+
+        <section id="support-es" lang="es" class="how-to">
+            <h1>Soporte</h1>
+            <div class="instructions">
+                <p>¿Preguntas o errores? Abra un issue en el repositorio con el nombre de la página y la versión del navegador, o envíe un correo al equipo de mapas con una descripción breve y una copia del GeoJSON que usó.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Video collapse buttons still use the existing toggleVideo function
+        // (FAQ is now static so no event delegation for .collapse-button is needed)
+
+        // Toggle language
+        function toggleLanguage() {
+            const body = document.body;
+            const button = document.querySelector('.language-toggle');
+            body.classList.toggle('spanish');
+            button.textContent = body.classList.contains('spanish') ? 'English' : 'Español';
+        }
+
+        // Go back to the webapp index page
+        function goBack() {
+            // try history first, fallback to index.html in same folder
+            if (window.history && window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Toggle video sections
+        function toggleVideo(videoId) {
+            const content = document.getElementById(videoId);
+            content.classList.toggle('show');
+            const button = content.previousElementSibling;
+            const buttonText = button.textContent.replace('▼ ', '');
+            const isSpanish = document.body.classList.contains('spanish');
+            button.textContent = content.classList.contains('show') ? 
+                '▼ ' + (isSpanish ? 'Ocultar: ' : 'Hide: ') + buttonText.replace(isSpanish ? 'Ver: ' : 'Watch: ', '') : 
+                '▼ ' + (isSpanish ? 'Ver: ' : 'Watch: ') + buttonText.replace(isSpanish ? 'Ocultar: ' : 'Hide: ', '');
+        }
+    </script>
+</body>
+</html>

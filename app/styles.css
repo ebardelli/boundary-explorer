@@ -1,0 +1,499 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+#left-column {
+    width: 30%;
+    max-width: 400px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#map-container {
+    flex-grow: 1;
+    height: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    margin-top: 0px;
+}
+
+.base-map-select {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Normalize form controls across browsers (fixes small controls in macOS Safari)
+   - ensure controls inherit the document font
+   - give an explicit, slightly larger font-size and line-height
+   - add padding so buttons/selects appear closer to Chrome's sizing
+   - avoid removing native select decorations in Safari by not forcing appearance:none on selects
+*/
+button,
+input,
+textarea {
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.35;
+    -webkit-font-smoothing: antialiased;
+    /* make touch targets a bit larger */
+    padding: 8px 10px;
+}
+/* Ensure plain buttons also use a stronger weight so text isn't too thin */
+button {
+    font-weight: 600;
+}
+
+/* Keep native select affordance but normalize font/line-height/padding */
+select {
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.35;
+    padding: 8px 10px;
+    -webkit-appearance: menulist-button; /* preserves Safari dropdown caret */
+    appearance: menulist-button; /* standard property for compatibility */
+}
+
+.section-header {
+    cursor: pointer;
+    /* Shows a hand cursor on hover */
+    padding: 8px;
+    /* Inner spacing around content */
+    background-color: #f5f5f5;
+    /* Light gray background */
+    border: 1px solid #ddd;
+    /* Light gray border */
+    border-radius: 4px;
+    /* Rounded corners */
+    margin-bottom: 5px;
+    /* Space below the header */
+    display: flex;
+    /* Uses flexbox for layout */
+    align-items: center;
+    /* Vertically centers content */
+}
+
+/* Changes background color when hovering over header */
+.section-header:hover {
+    background-color: #ebebeb;
+    /* Slightly darker gray on hover */
+}
+
+/* Rotates the arrow icon when section is open */
+.section-header.open .toggle-icon {
+    transform: rotate(90deg);
+    /* Rotates the ▶ symbol 90 degrees */
+}
+
+/* Styles for the arrow/triangle icon */
+.toggle-icon {
+    display: inline-block;
+    /* Allows transform to work */
+    transition: transform 0.2s ease;
+    /* Smooth rotation animation */
+    margin-right: 8px;
+    /* Space between icon and text */
+}
+
+/* Styles for the collapsible content area */
+.section-content {
+    padding: 10px;
+    /* Inner spacing */
+    border: 1px solid #ddd;
+    /* Light gray border */
+    border-radius: 4px;
+    /* Rounded corners */
+    margin-top: -5px;
+    /* Pulls content slightly up */
+    margin-bottom: 10px;
+    /* Space below content */
+    background-color: white;
+    /* White background */
+}
+
+/* Left column slide/collapse styles (moved from ui.js) */
+/* Base z-index kept low so it doesn't overlap the map normally; when revealed we raise it. */
+/* outer container is transformed; inner container holds scrollable content so scrollbar stays attached */
+/* make the left column span the viewport height so the inner scroll area
+    has a consistent containing block and all content becomes reachable */
+/* remove the default 20px padding from index.html and let .left-inner control spacing */
+#left-column {
+    transition: transform 240ms ease, box-shadow 240ms ease, background-color 240ms ease;
+    position: relative;
+    z-index: 100;
+    height: 100vh;
+    padding: 0;
+    background-color: white;
+    /* hint to the browser which properties will animate to reduce repaints */
+    will-change: transform, box-shadow, background-color;
+}
+
+/* place the scrollable area absolutely below the fixed toggle button so the
+     scrollbar tracks only the content area (not the button spacer) */
+/* top is computed dynamically (CSS variable) so the scroll area matches the button height
+      and adapts to layout/resize. Fallback to 56px if variable isn't set. */
+/* place the scrollable area below the fixed toggle button; use max-height
+      so the scroll area equals viewport minus the offset and remains scrollable */
+#left-column .left-inner {
+    box-sizing: border-box;
+    position: relative;
+    margin-top: var(--left-toggle-offset, 56px);
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - var(--left-toggle-offset, 56px));
+    overflow-y: auto;
+    padding: 12px 0 12px 12px;
+}
+
+/* When collapsed we use fixed positioning so the hidden panel does not affect page height */
+#left-column.collapsed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: none;
+    z-index: 90;
+    pointer-events: none;
+}
+
+/* When the collapsed panel is temporarily revealed, bring it above the map but below the button */
+#left-column.collapsed.hovered {
+    position: fixed;
+    transform: translateX(0);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.18);
+    z-index: 1190;
+    pointer-events: auto;
+}
+
+/* Also support non-collapsed hovered state */
+#left-column.hovered {
+    z-index: 1190;
+    pointer-events: auto;
+}
+
+/* Keep the left column opaque white when revealed in hover mode */
+#left-column.collapsed.hovered,
+#left-column.hovered {
+    background-color: white;
+    /* match existing transition timing for a smooth reveal */
+    transition: background-color 240ms ease;
+}
+
+/* Ensure map container can expand when sidebar is collapsed */
+#map-container.fullwidth {
+    width: 100%;
+    flex-basis: auto;
+}
+
+/* Small toggle button (kept above other elements) */
+#left-toggle-button {
+    position: fixed;
+    left: 22px;
+    top: 8px;
+    z-index: 1200;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Ensure the left toggle button keeps a compact width even if other button rules exist */
+#left-toggle-button {
+    width: auto;
+    min-width: 40px;
+    box-sizing: border-box;
+}
+
+#left-toggle-button.collapsed {
+    /* Active presenter mode: keep icon upright but change background for visual affordance */
+    transform: none;
+    background: #757575; /* medium gray */
+    color: #fff; /* ensure SVG stroke/fill (currentColor) becomes visible */
+    border-color: rgba(0,0,0,0.2);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+
+/* Presenter-mode button: show icon + label when not collapsed; icon-only when collapsed */
+#left-toggle-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+#left-toggle-button svg { display: block; width: 20px; height: 20px; }
+#left-toggle-button .label { white-space: nowrap; }
+
+/* Hide the textual label when button is in collapsed (active presenter) state */
+#left-toggle-button.collapsed .label { display: none; }
+
+/* Hover hotspot shown only when collapsed (above sidebar but below the button) */
+#left-hover-area {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 18px;
+    z-index: 1150;
+    pointer-events: auto;
+}
+
+#left-hover-area.hidden {
+    display: none;
+}
+
+/* style for color pickers added to the layer control */
+.leaflet-control-layers-list .layer-color-picker {
+    vertical-align: middle;
+    width: 28px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+/* when the input is inserted as a sibling of the label, ensure spacing */
+.leaflet-control-layers-list label + .layer-color-picker {
+    margin-left: 6px;
+}
+
+/* Color swatch button placed next to layer labels */
+.leaflet-control-layers-list .layer-color-swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #999;
+    border-radius: 2px;
+    padding: 0;
+    margin-left: 6px;
+    vertical-align: middle;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.leaflet-control-layers-list .layer-color-popover {
+    /* JS will position this element (fixed) to avoid viewport overflow */
+    position: fixed;
+    display: none;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 6px;
+    z-index: 12000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: auto;
+}
+
+/* Allow label text to wrap; keep swatch and popover positioned inside the label */
+.leaflet-control-layers-list label { display: block; position: relative; padding-right: 36px; }
+
+.layer-color-palette { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px; }
+.layer-color-tile { width:20px; height:20px; border-radius:3px; border:1px solid #ccc; padding:0; cursor:pointer }
+.layer-color-hex { display:flex; gap:6px; align-items:center }
+.layer-color-hex input[type=text] { width:90px; padding:3px; border:1px solid #ccc; border-radius:3px }
+.layer-color-hex button { padding:4px 6px }
+
+/* Neutral base for buttons used by the app. Avoid forcing width here so
+   we can apply full-width behavior only to the toolbar/list variant. */
+.tool-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    color: #222;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Explicit variant for the vertical tool list: full-width stacked buttons */
+.tool-list-button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    color: #222;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+.map-editor-row .tool-list-button:first-child { margin-top: 0; }
+.map-editor-row .tool-list-button:last-child { margin-bottom: 6px; }
+.tool-list-button:hover { background: #ebebeb; outline: none; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+
+/* Compact variant for inline action buttons (select/remove) used in lists */
+.tool-inline,
+.tool-button.small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 6px 8px;
+    font-size: 12px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-top: 0;
+    font-weight: 600; /* ensure small buttons match main weight */
+}
+
+/* Colored select button used in the school list. Background and foreground
+   color are set per-school by JS (so the color reflects the school). Other
+   appearance rules live here for consistency and accessibility. */
+.school-select-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.18);
+    margin-right: 10px;
+    cursor: pointer;
+    transition: box-shadow 120ms ease, transform 120ms ease, opacity 120ms ease;
+    min-width: 56px; /* keep a stable clickable size */
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+.school-select-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+}
+.school-select-button[aria-pressed="true"] {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+
+/* Ensure buttons inside school-type-content adopt compact spacing and match the app theme */
+.school-type-content button {
+    margin-left: 10px; /* keep spacing from school name */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    color: #222;
+    cursor: pointer;
+    padding: 6px 8px;
+}
+.school-type-content button:hover { background: #ebebeb; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+
+/* Ensure school list rows align nicely and long names don't push buttons off-screen */
+.school-type-content > div {
+    display: flex;
+    align-items: center;
+}
+.school-type-content > div span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Modal/tab button visual consistency: use same weight and smoothing as tool buttons */
+.modal-close-button,
+.stats-tab-button,
+.stats-tab-button.active {
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Make modal-close-button look like a tool-button when possible */
+.modal-close-button {
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    color: #222;
+}
+
+/* Landmark icon styling (used by landmark divIcons). Relies on Font Awesome being loaded. */
+.landmark-divicon-container { display: inline-block; }
+.landmark-divicon { display:inline-flex; align-items:center; justify-content:center; }
+.landmark-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border: 1px solid rgba(0,0,0,0.18);
+    box-sizing: border-box;
+}
+.landmark-icon i, .landmark-icon span {
+    pointer-events: none; /* let marker handle events so popups open reliably */
+    display: inline-block;
+    line-height: 1;
+}
+.landmark-icon i { font-size: 12px; color: white; }
+
+/* If the map container uses SVG/pointer-events rules, ensure markers remain interactive */
+.leaflet-marker-icon .landmark-icon { pointer-events: auto; }
+
+/* School marker styles: circular swatch with Font Awesome school icon */
+.school-divicon-container { display:inline-block; }
+.school-divicon { display:inline-flex; align-items:center; justify-content:center; }
+.school-icon { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-sizing:border-box; border:1px solid rgba(0,0,0,0.18); }
+.school-icon i { pointer-events:none; color:white; font-size:14px; line-height:1 }
+.leaflet-marker-icon .school-icon { pointer-events:auto; }
+
+/* Loading overlay shown on initial app load while DuckDB initializes */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.95);
+    z-index: 99999;
+}
+.loading-content {
+    text-align: center;
+    max-width: 360px;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    background: white;
+}
+.loading-content .spinner {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px auto;
+    border-radius: 50%;
+    border: 4px solid #e6e6e6;
+    border-top-color: #3b82f6;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-content #loading-message { font-size: 15px; color: #222; }
+.loading-content .tool-list-button,
+.loading-content .tool-button { width: auto; padding: 8px 12px; }

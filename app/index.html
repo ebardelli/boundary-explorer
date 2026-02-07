@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Local vendor assets (run scripts/vendor.sh to download into vendor/) -->
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+    <!-- Font Awesome for landmark icons -->
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- Loading overlay shown until the in-browser database is ready -->
+    <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite">
+        <div class="loading-content">
+            <div class="spinner" aria-hidden="true"></div>
+            <div id="loading-message">Initializing database</div>
+            <button id="loading-retry" class="tool-inline" style="display:none; margin-top:12px;">Retry</button>
+        </div>
+    </div>
+    <div id="left-column">
+
+        <div class="section">
+            <div class="section-header open" role="button" aria-expanded="true">
+                <span class="toggle-icon">▶</span>
+                <strong>Map</strong>
+            </div>
+            <div class="section-content">
+                <div id="map-selector"></div>
+                <div id="map-mode"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header open" role="button" aria-expanded="true">
+                <span class="toggle-icon">▶</span>
+                <strong>Schools</strong>
+            </div>
+            <div class="section-content">
+                <div id="school-list"></div>
+            </div>
+        </div>
+       
+            <!-- Mapping Tools placeholder: mappingTools.js will insert the Mapping Tools section here -->
+            <div id="mapping-tools-placeholder"></div>
+
+        <div class="section">
+            <div class="section-header" role="button" aria-expanded="false">
+                <span class="toggle-icon">▶</span>
+                <strong>Instructions</strong>
+            </div>
+            <div class="section-content">
+                <div id="language-select"></div>
+                <div id="instructions"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <script src="vendor/leaflet/leaflet.js"></script>
+    <!-- If vendor files are missing, run `scripts/vendor.sh` to download them. -->
+    
+    <script type="module" src="scripts/main.js"></script>
+</body>
+</html>
