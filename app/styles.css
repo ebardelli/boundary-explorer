@@ -497,3 +497,40 @@ select {
 .loading-content #loading-message { font-size: 15px; color: #222; }
 .loading-content .tool-list-button,
 .loading-content .tool-button { width: auto; padding: 8px 12px; }
+
+/* Compact controls for the school editor table to prevent overflow */
+#edit-schools-table input.school-color {
+    /* Make the color picker visually match the inline action button size */
+    box-sizing: border-box;
+    min-width: 36px;
+    height: 28px;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-clip: padding-box;
+    vertical-align: middle;
+}
+
+#edit-schools-table .tool-inline.delete-row {
+    padding: 4px 8px; /* slightly smaller than .tool-inline default */
+    font-size: 12px;
+    line-height: 1;
+    min-width: 0;
+    height: 28px; /* keep button height consistent with inputs */
+}
+
+/* Ensure inputs inside the editor table fit their cells: include padding in width
+   and limit size so .width:100% entries do not overflow the td. Allow wrapping
+   so narrow viewports don't force overflow. */
+#edit-schools-table td { white-space: normal; }
+
+#edit-schools-table input[type="text"],
+#edit-schools-table input[type="number"],
+#edit-schools-table input[type="color"],
+#edit-schools-table select,
+#edit-schools-table textarea {
+    box-sizing: border-box; /* include padding in width */
+    padding: 4px 6px; /* smaller padding so width:100% fits */
+    max-width: 100%;
+    font-size: 13px;
+}
