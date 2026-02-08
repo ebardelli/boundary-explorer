@@ -1,14 +1,14 @@
 {
-  "name": "school-consolidation",
-  "version": "2025.10.17",
+  "name": "boundary-explorer",
+  "version": "2026.02.07",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "vitest"
   },
   "devDependencies": {
-    "happy-dom": "^9.0.0",
-    "vitest": "^1.0.0",
-    "duckdb": "^1.4.1"
+    "happy-dom": "^9.20.3",
+    "vitest": "^1.6.1",
+    "duckdb": "^1.4.4"
   }
 }
