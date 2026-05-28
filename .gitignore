@@ -2,3 +2,5 @@ node_modules/
 
 queries/student_location.sql
 data/students.parquet
+
+app/vendor/
