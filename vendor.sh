@@ -75,7 +75,7 @@ done
 echo "Vendor files downloaded. Please verify and commit vendor/ to your repo if desired."
 
 # Duckdb-wasm vendoring
-DUCKDB_TAG="1.33.1-dev18.0"
+DUCKDB_TAG="1.33.1-dev45.0"
 DUCKDB_PARENT_DIR="$ROOT_DIR/vendor/@duckdb"
 DUCKDB_DIR="$DUCKDB_PARENT_DIR/duckdb-wasm"
 mkdir -p "$DUCKDB_PARENT_DIR"
